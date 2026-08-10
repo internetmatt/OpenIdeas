@@ -52,4 +52,26 @@ describe('assistant-flow manifest validation', () => {
             'Association 0 kind must be "chatflow" or "agentflow"'
         ])
     })
+
+    it('requires schema version 1 and an associations collection', () => {
+        const result = validateAssistantFlowManifest({ schemaVersion: 2 }, [])
+
+        assert.equal(result.valid, false)
+        assert.deepEqual(result.errors, [
+            'Manifest schemaVersion must be 1',
+            'Manifest associations must be an array'
+        ])
+    })
+
+    it('matches trimmed assistant identifiers against the required inventory', () => {
+        const result = validateAssistantFlowManifest(
+            {
+                schemaVersion: 1,
+                associations: [{ assistantId: ' research-assistant ', flowId: ' flow-id ', kind: 'chatflow' }]
+            },
+            ['research-assistant']
+        )
+
+        assert.deepEqual(result, { valid: true, errors: [] })
+    })
 })
