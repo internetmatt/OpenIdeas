@@ -4,7 +4,15 @@ const isNonEmptyString = (value) => typeof value === 'string' && value.trim().le
 
 export const validateAssistantFlowManifest = (manifest, assistantIds = []) => {
     const errors = []
-    const associations = Array.isArray(manifest?.associations) ? manifest.associations : []
+    if (manifest?.schemaVersion !== 1) {
+        errors.push('Manifest schemaVersion must be 1')
+    }
+
+    const hasAssociations = Array.isArray(manifest?.associations)
+    if (!hasAssociations) {
+        errors.push('Manifest associations must be an array')
+    }
+    const associations = hasAssociations ? manifest.associations : []
 
     associations.forEach((association, index) => {
         if (!isNonEmptyString(association?.assistantId)) {
@@ -18,8 +26,8 @@ export const validateAssistantFlowManifest = (manifest, assistantIds = []) => {
         }
     })
 
-    for (const assistantId of new Set(assistantIds)) {
-        const associationCount = associations.filter((association) => association?.assistantId === assistantId).length
+    for (const assistantId of new Set(assistantIds.map((value) => value.trim()).filter(Boolean))) {
+        const associationCount = associations.filter((association) => association?.assistantId?.trim() === assistantId).length
         if (associationCount !== 1) {
             errors.push(`Assistant "${assistantId}" must have exactly one flow association`)
         }
@@ -27,4 +35,3 @@ export const validateAssistantFlowManifest = (manifest, assistantIds = []) => {
 
     return { valid: errors.length === 0, errors }
 }
-
