@@ -1,0 +1,17 @@
+{
+    "schemaVersion": 1,
+    "associations": [
+        {
+            "assistantId": "research-assistant",
+            "flowId": "replace-with-chatflow-id",
+            "kind": "chatflow",
+            "label": "Research conversation"
+        },
+        {
+            "assistantId": "document-assistant",
+            "flowId": "replace-with-agentflow-id",
+            "kind": "agentflow",
+            "label": "Document workflow"
+        }
+    ]
+}
