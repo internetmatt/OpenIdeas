@@ -28,6 +28,7 @@ import {
     getJWTRefreshTokenSecret
 } from '../../utils/authSecrets'
 import { decryptToken, encryptToken, generateSafeCopy } from '../../utils/tempTokenUtils'
+import { applyDefaultWorkspace } from '../../utils/applyDefaultWorkspace'
 import { getAuthStrategy } from './AuthStrategy'
 import { initializeDBClientAndStore, initializeRedisClientAndStore } from './SessionPersistance'
 
@@ -429,7 +430,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
             return res.status(401).json({ redirectUrl: '/license-expired' })
         }
 
-        req.user = user
+        req.user = applyDefaultWorkspace(user)
         next()
     })(req, res, next)
 }
