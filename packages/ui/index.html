@@ -42,6 +42,18 @@
             rel="stylesheet"
         />
         <!-- Rewardful (r.wdfl.co) removed: affiliate tracker rewrote SPA routes to /undefined -->
+        <script>
+            // Prefer an explicit host inject. Fall back to <base href> that
+            // reverse-proxies (Projecto agent-workspace, Ideas canvas-island) add.
+            window.__FLOWISE_BASENAME__ =
+                window.__FLOWISE_BASENAME__ ||
+                (function () {
+                    var el = document.querySelector('base')
+                    var href = el && el.getAttribute('href')
+                    if (!href || href === '/') return ''
+                    return href.replace(/\/$/, '')
+                })()
+        </script>
     </head>
 
     <body>

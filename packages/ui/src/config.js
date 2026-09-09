@@ -1,5 +1,7 @@
 const config = {
-    // basename: only at build time to set, and Don't add '/' at end off BASENAME for breadcrumbs, also Don't put only '/' use blank('') instead,
+    // Keep empty. Subpath embedding uses BrowserRouter basename={window.__FLOWISE_BASENAME__}.
+    // useRoutes(routes, config.basename) in RR 6.3 treats a non-empty string as the
+    // location pathname, so a mount path here blanks /v2/agentcanvas.
     basename: '',
     defaultPath: '/chatflows',
     // You can specify multiple fallback fonts
