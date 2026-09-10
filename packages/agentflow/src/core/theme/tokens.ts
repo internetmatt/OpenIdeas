@@ -57,10 +57,12 @@ const baseColors = {
     warningText: '#744210',
     info: '#2196f3',
 
-    // MUI palette colors - primary (blue)
-    primaryLight: '#e3f2fd',
-    primaryMain: '#2196f3',
-    primaryDark: '#1e88e5',
+    // MUI palette colors - primary (Ideus / AskDilly-Core dilly-orange)
+    // Catalog: Core-Framework packages/figma/src/ideus/catalog.json → openideas
+    // --color--dilly-orange-100 / 500 / 600
+    primaryLight: '#fff2e5',
+    primaryMain: '#f99334',
+    primaryDark: '#f57600',
 
     // MUI palette colors - secondary (purple)
     secondaryLight: '#ede7f6',
