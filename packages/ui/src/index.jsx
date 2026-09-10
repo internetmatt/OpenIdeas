@@ -18,10 +18,15 @@ import { ErrorProvider } from '@/store/context/ErrorContext'
 const container = document.getElementById('root')
 const root = createRoot(container)
 
+// Hosts (Projecto /apps/agent-workspace/flows, Ideas canvas-island) set this
+// before the bundle runs. Keep config.basename empty — RR 6.3 useRoutes(routes,
+// config.basename) treats a non-empty string as the location and blanks the canvas.
+const routerBasename = typeof window !== 'undefined' ? window.__FLOWISE_BASENAME__ || '' : ''
+
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <BrowserRouter>
+            <BrowserRouter basename={routerBasename}>
                 <SnackbarProvider>
                     <ConfigProvider>
                         <ErrorProvider>
