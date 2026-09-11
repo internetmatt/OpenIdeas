@@ -20,7 +20,7 @@ English | [中文](./README-ZH.md)
     npx flowise start
     ```
 
-3. Open [http://localhost:3000](http://localhost:3000)
+3. Open [http://localhost:3010](http://localhost:3010) (Ideus default; set `PORT=3010`. Upstream Flowise used `:3000`.)
 
 ## 🌱 Env Variables
 
@@ -29,7 +29,7 @@ Flowise support different environment variables to configure your instance. You 
 You can also specify the env variables when using `npx`. For example:
 
 ```
-npx flowise start --PORT=3000 --DEBUG=true
+npx flowise start --PORT=3010 --DEBUG=true
 ```
 
 ## 📖 Tests

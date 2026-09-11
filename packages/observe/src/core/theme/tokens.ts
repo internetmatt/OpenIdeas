@@ -16,6 +16,10 @@ const baseColors = {
     aqua: '#4DDBBB',
     black: '#000',
     blue: '#2196f3',
+    // Ideus / AskDilly-Core dilly-orange (catalog project `openideas`)
+    dillyOrange: '#f99334',
+    dillyOrangeDark: '#f57600',
+    dillyOrangeLight: '#fff2e5',
     brightGreen: '#00e676',
     brightYellow: '#fee440',
     coral: '#FF7F7F',
@@ -124,7 +128,7 @@ export const tokens = {
         },
         palette: {
             error: { dark: baseColors.darkRed, light: baseColors.paleRed, main: baseColors.red },
-            primary: { dark: baseColors.mediumBlue, light: baseColors.paleBlue, main: baseColors.blue },
+            primary: { dark: baseColors.dillyOrangeDark, light: baseColors.dillyOrangeLight, main: baseColors.dillyOrange },
             secondary: { dark: baseColors.darkPurple, light: baseColors.palePurple, main: baseColors.purple },
             success: { dark: baseColors.vividGreen, light: baseColors.paleGreen, main: baseColors.brightGreen },
             warning: { dark: baseColors.goldAmber, light: baseColors.paleAmber, main: baseColors.amber }

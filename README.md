@@ -1,5 +1,14 @@
 <!-- markdownlint-disable MD030 -->
 
+# OpenIdeas
+
+Ideus visual-agent canvas. **Origin:** [internetmatt/OpenIdeas](https://github.com/internetmatt/OpenIdeas). Apache-2.0 **upstream** is [FlowiseAI/Flowise](https://github.com/FlowiseAI/Flowise) — we do not ship the product as “Flowise.”
+
+- Local Ideus port: **[http://localhost:3010](http://localhost:3010)** (see [`docs/IDEUS-PACKAGING.md`](./docs/IDEUS-PACKAGING.md); upstream docs below still mention `:3000`)
+- Core canvas swap: [`packages/server/src/ideus-core/`](./packages/server/src/ideus-core/README.md) — point AskDilly-Core `IDEUS_FLOWISE_BASE_URL` here, not stock `flowiseai/flowise`
+
+---
+
 <p align="center">
 <img src="https://github.com/FlowiseAI/Flowise/blob/main/images/flowise_white.svg#gh-light-mode-only">
 <img src="https://github.com/FlowiseAI/Flowise/blob/main/images/flowise_dark.svg#gh-dark-mode-only">
