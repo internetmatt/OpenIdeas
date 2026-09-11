@@ -97,8 +97,12 @@ export function getCorsOptions(): any {
                 // Always allow no-Origin requests (same-origin, server-to-server)
                 if (!originLc) return originCallback(null, true)
 
-                // Block null origins (sandboxed iframes, data: URIs, file:// pages)
-                if (originLc === 'null') return originCallback(null, false)
+                // The packaged Ideas renderer has a file:// origin. Its bundled
+                // OpenIdeas child is loopback-only and opts into this explicitly;
+                // every normal server deployment continues to reject null origins.
+                if (originLc === 'null') {
+                    return originCallback(null, process.env.FLOWISE_DESKTOP_EMBEDDED === 'true')
+                }
 
                 // Session-issuing endpoints: ignore global wildcard, use APP_URL origin or explicit CORS_ORIGINS list
                 if (isSessionEndpoint(req.url)) {

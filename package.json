@@ -13,6 +13,7 @@
     "scripts": {
         "build": "turbo run build",
         "build:docker": "turbo run build --filter=!@flowiseai/agentflow --filter=!@flowiseai/observe",
+        "build:desktop-runtime": "node scripts/build-desktop-runtime.mjs",
         "build-force": "pnpm clean && turbo run build --force",
         "dev": "turbo run dev --parallel --no-cache",
         "start": "run-script-os",

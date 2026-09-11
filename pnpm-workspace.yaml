@@ -1,2 +1,5 @@
 packages:
     - 'packages/*'
+
+# Keep desktop exports compatible with the existing shared workspace lockfile.
+forceLegacyDeploy: true
