@@ -21,12 +21,15 @@ import { getAllowedIframeOrigins, getCorsOptions, getIframeSecurityHeaders, vali
 describe('getCorsOptions', () => {
     const SAVED_CORS_ORIGINS = process.env.CORS_ORIGINS
     const SAVED_CORS_ALLOW_CREDENTIALS = process.env.CORS_ALLOW_CREDENTIALS
+    const SAVED_DESKTOP_EMBEDDED = process.env.FLOWISE_DESKTOP_EMBEDDED
 
     afterEach(() => {
         if (SAVED_CORS_ORIGINS !== undefined) process.env.CORS_ORIGINS = SAVED_CORS_ORIGINS
         else delete process.env.CORS_ORIGINS
         if (SAVED_CORS_ALLOW_CREDENTIALS !== undefined) process.env.CORS_ALLOW_CREDENTIALS = SAVED_CORS_ALLOW_CREDENTIALS
         else delete process.env.CORS_ALLOW_CREDENTIALS
+        if (SAVED_DESKTOP_EMBEDDED !== undefined) process.env.FLOWISE_DESKTOP_EMBEDDED = SAVED_DESKTOP_EMBEDDED
+        else delete process.env.FLOWISE_DESKTOP_EMBEDDED
     })
 
     function getCredentials(corsOrigins: string | undefined, corsAllowCredentials: string | undefined): boolean {
@@ -86,6 +89,32 @@ describe('getCorsOptions', () => {
             process.env.CORS_ALLOW_CREDENTIALS = 'true'
             validateCorsConfig()
             expect(logger.warn).not.toHaveBeenCalled()
+        })
+    })
+
+    describe('packaged desktop origin', () => {
+        async function allowsOrigin(origin: string): Promise<boolean> {
+            process.env.CORS_ORIGINS = '*'
+            let allowed = false
+            await new Promise<void>((resolve) => {
+                getCorsOptions()({ url: '/api/v1/chatflows' }, (_err: any, options: any) => {
+                    options.origin(origin, (_originErr: Error | null, value?: boolean) => {
+                        allowed = value === true
+                        resolve()
+                    })
+                })
+            })
+            return allowed
+        }
+
+        it('allows the Ideas file origin only for the explicit desktop sidecar mode', async () => {
+            process.env.FLOWISE_DESKTOP_EMBEDDED = 'true'
+            await expect(allowsOrigin('null')).resolves.toBe(true)
+        })
+
+        it('continues to reject null origins for normal server deployments', async () => {
+            delete process.env.FLOWISE_DESKTOP_EMBEDDED
+            await expect(allowsOrigin('null')).resolves.toBe(false)
         })
     })
 })

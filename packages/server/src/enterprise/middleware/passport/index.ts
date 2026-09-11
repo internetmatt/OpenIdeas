@@ -40,7 +40,9 @@ const expireAuthTokensOnRestart = process.env.EXPIRE_AUTH_TOKENS_ON_RESTART === 
 // This is useful when running behind a reverse proxy/load balancer that terminates SSL
 // In production, always enforce secure cookies to prevent clear-text transmission of session data.
 const secureCookie =
-    process.env.NODE_ENV === 'production'
+    process.env.FLOWISE_DESKTOP_EMBEDDED === 'true'
+        ? false
+        : process.env.NODE_ENV === 'production'
         ? true
         : process.env.SECURE_COOKIES === 'false'
         ? false
