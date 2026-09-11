@@ -1,6 +1,5 @@
 packages:
     - 'packages/*'
 
-# Required by pnpm 10's deploy command so the desktop runtime can package the
-# built workspace dependencies without re-resolving the entire public registry.
-injectWorkspacePackages: true
+# Keep desktop exports compatible with the existing shared workspace lockfile.
+forceLegacyDeploy: true
