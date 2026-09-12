@@ -11,6 +11,7 @@ import authApi from '@/api/auth'
 
 // Hooks
 import useApi from '@/hooks/useApi'
+import { assignLocationIfUsable } from '@/utils/safeBrowserPath'
 
 // ==============================|| ResolveLoginPage ||============================== //
 
@@ -30,8 +31,10 @@ const ResolveLoginPage = () => {
 
     useEffect(() => {
         setLoading(false)
+        // SPA fallback HTML is truthy but has no redirectUrl — assigning it
+        // stringifies to the relative path "undefined" → /undefined.
         if (resolveLogin.data) {
-            window.location.href = resolveLogin.data.redirectUrl
+            assignLocationIfUsable(resolveLogin.data.redirectUrl)
         }
     }, [resolveLogin.data])
 
