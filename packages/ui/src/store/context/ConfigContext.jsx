@@ -19,26 +19,26 @@ export const ConfigProvider = ({ children }) => {
                     ...currentSettingsData.data
                 }
                 setConfig(finalData)
-                if (finalData.PLATFORM_TYPE) {
-                    if (finalData.PLATFORM_TYPE === 'enterprise') {
-                        setEnterpriseLicensed(true)
-                        setCloudLicensed(false)
-                        setOpenSource(false)
-                    } else if (finalData.PLATFORM_TYPE === 'cloud') {
-                        setCloudLicensed(true)
-                        setEnterpriseLicensed(false)
-                        setOpenSource(false)
-                    } else {
-                        setOpenSource(true)
-                        setEnterpriseLicensed(false)
-                        setCloudLicensed(false)
-                    }
+                if (finalData.PLATFORM_TYPE === 'enterprise') {
+                    setEnterpriseLicensed(true)
+                    setCloudLicensed(false)
+                    setOpenSource(false)
+                } else if (finalData.PLATFORM_TYPE === 'cloud') {
+                    setCloudLicensed(true)
+                    setEnterpriseLicensed(false)
+                    setOpenSource(false)
+                } else {
+                    // Missing PLATFORM_TYPE is OpenIdeas / Projecto loopback.
+                    setOpenSource(true)
+                    setEnterpriseLicensed(false)
+                    setCloudLicensed(false)
                 }
 
                 setLoading(false)
             })
             .catch((error) => {
                 console.error('Error fetching data:', error)
+                setOpenSource(true)
                 setLoading(false)
             })
     }, [])

@@ -42,8 +42,12 @@ export const RequireAuth = ({ permission, display, children }) => {
     }
 
     // Step 1: Authentication Check
-    // Redirect to login if user is not authenticated
+    // Open source / Projecto loopback has no login wall. Sending OSS to
+    // /login POSTs /auth/resolve; a missing redirectUrl becomes /undefined.
     if (!currentUser) {
+        if (isOpenSource) {
+            return !display ? children : <Navigate to='/unauthorized' replace />
+        }
         return <Navigate to='/login' replace state={{ path: location.pathname }} />
     }
 

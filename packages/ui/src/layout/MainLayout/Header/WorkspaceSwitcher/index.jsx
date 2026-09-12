@@ -159,7 +159,7 @@ const WorkspaceSwitcher = () => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getWorkspacesByOrganizationIdUserIdApi.data, user.activeWorkspaceId])
+    }, [getWorkspacesByOrganizationIdUserIdApi.data, user?.activeWorkspaceId])
 
     useEffect(() => {
         if (getWorkspacesByUserIdApi.data) {
@@ -181,7 +181,7 @@ const WorkspaceSwitcher = () => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getWorkspacesByUserIdApi.data, user.activeWorkspaceId])
+    }, [getWorkspacesByUserIdApi.data, user?.activeWorkspaceId])
 
     useEffect(() => {
         if (switchWorkspaceApi.data) {

@@ -205,6 +205,11 @@ export const initializeJwtCookieMiddleware = async (app: express.Application, id
         // for Cloud (Horizontal) version, redirect to the signin page
         const expressApp = getRunningExpressApp()
         const platform = expressApp.identityManager.getPlatformType()
+        // OSS / Projecto loopback has no login wall. A redirectUrl of "/"
+        // reloads `/` forever in the live SPA (`location.href = redirectUrl`).
+        if (platform === Platform.OPEN_SOURCE) {
+            return res.status(HttpStatusCode.Ok).json({})
+        }
         if (platform === Platform.CLOUD) {
             return res.status(HttpStatusCode.Ok).json({ redirectUrl: '/signin' })
         }
