@@ -6,7 +6,35 @@
         <!-- Meta Tags-->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#2296f3" />
+        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#1a1a1a" />
+        <style data-projecto-dark-first-paint>
+            html,body,#root,#portal{background:#1a1a1a!important;color-scheme:dark}
+        </style>
+        <script data-projecto-missing-flow-guard>
+            (function () {
+                try {
+                    localStorage.setItem('isDarkMode', 'true')
+                    localStorage.setItem('isAuthenticated', 'true')
+                    var user = localStorage.getItem('user')
+                    if (!user || user === 'null' || user === 'undefined') {
+                        localStorage.setItem(
+                            'user',
+                            JSON.stringify({
+                                id: 'openideas',
+                                name: 'OpenIdeas',
+                                email: '',
+                                isSSO: false,
+                                assignedWorkspaces: [],
+                                activeWorkspaceId: 'General'
+                            })
+                        )
+                    }
+                } catch (e) {}
+                var re = /(?:^|\/)(undefined|null)\/?$/
+                if (re.test(location.pathname)) history.replaceState(null, '', '/')
+            })()
+        </script>
         <meta name="title" content="Flowise - Build AI Agents, Visually" />
         <meta
             name="description"
@@ -58,7 +86,7 @@
 
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root"></div>
+        <div id="root"><div data-projecto-root-boot style="min-height:100vh;background:#1a1a1a"></div></div>
         <div id="portal"></div>
         <script type="module" src="src/index.jsx"></script>
         <script>

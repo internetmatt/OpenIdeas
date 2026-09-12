@@ -32,9 +32,22 @@ import Workspaces from '@/views/workspace'
  */
 export const DefaultRedirect = () => {
     const { hasPermission, hasDisplay } = useAuth()
-    const { isOpenSource } = useConfig()
+    const { isOpenSource, loading } = useConfig()
     const isGlobal = useSelector((state) => state.auth.isGlobal)
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+    const currentUser = useSelector((state) => state.auth.user)
+
+    if (loading) {
+        return null
+    }
+
+    // Open source / Projecto loopback has no login wall. Rendering <Login />
+    // POSTs /auth/resolve; a stub redirectUrl of "/" reloads `/` forever.
+    // Authenticated-without-user is the HTML boot guard (isAuthenticated=true,
+    // no user JSON) — do not fall through to permission checks.
+    if (isOpenSource || !currentUser) {
+        return <Chatflows />
+    }
 
     // Define the order of routes to check (based on the menu order in dashboard.js)
     const routesToCheck = [
@@ -63,14 +76,8 @@ export const DefaultRedirect = () => {
         { component: Account, display: 'feat:account' }
     ]
 
-    // If user is not authenticated, show login page
     if (!isAuthenticated) {
         return <Login />
-    }
-
-    // For open source, show chatflows (no permission checks)
-    if (isOpenSource) {
-        return <Chatflows />
     }
 
     // For global admins, show chatflows (they have access to everything)

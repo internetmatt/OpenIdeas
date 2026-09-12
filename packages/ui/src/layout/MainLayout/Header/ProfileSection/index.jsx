@@ -498,7 +498,7 @@ const ProfileSection = ({ handleLogout }) => {
                                                     </ListItemIcon>
                                                     <ListItemText primary={<Typography variant='body2'>Version</Typography>} />
                                                 </ListItemButton>
-                                                {isAuthenticated && !currentUser.isSSO && (
+                                                {isAuthenticated && currentUser && !currentUser.isSSO && (
                                                     <ListItemButton
                                                         sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                         onClick={() => {

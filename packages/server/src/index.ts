@@ -369,6 +369,11 @@ export class App {
 
         // All other requests not handled will return React app
         this.app.use((req: Request, res: Response) => {
+            const last = (req.path || '').replace(/\/+$/, '').split('/').pop() || ''
+            if (last === 'undefined' || last === 'null') {
+                res.setHeader('cache-control', 'no-store')
+                return res.redirect(302, '/')
+            }
             res.sendFile(uiHtmlPath)
         })
 

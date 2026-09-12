@@ -14,6 +14,9 @@ import ConfirmContextProvider from '@/store/context/ConfirmContextProvider'
 import { ReactFlowContext } from '@/store/context/ReactFlowContext'
 import { ConfigProvider } from '@/store/context/ConfigContext'
 import { ErrorProvider } from '@/store/context/ErrorContext'
+import { replaceMissingFlowPath } from '@/utils/safeBrowserPath'
+
+replaceMissingFlowPath()
 
 const container = document.getElementById('root')
 const root = createRoot(container)
