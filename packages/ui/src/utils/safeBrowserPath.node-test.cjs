@@ -33,7 +33,7 @@ test('accepts real Flowise routes and UUIDs', () => {
 });
 
 test('never assigns location.href when redirectUrl is missing', () => {
-    const locationRef = { href: '/login' };
+    const locationRef = { href: '/login', pathname: '/login' };
     assert.equal(assignLocationIfUsable(undefined, locationRef), false);
     assert.equal(assignLocationIfUsable({ redirectUrl: '/' }, locationRef), false);
     assert.equal(locationRef.href, '/login');
