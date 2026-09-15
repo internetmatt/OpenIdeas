@@ -29,6 +29,7 @@ import {
 } from '../../utils/authSecrets'
 import { decryptToken, encryptToken, generateSafeCopy } from '../../utils/tempTokenUtils'
 import { applyDefaultWorkspace } from '../../utils/applyDefaultWorkspace'
+import { resolveOssLoopbackUser } from '../../utils/ossLoopbackIdentity'
 import { getAuthStrategy } from './AuthStrategy'
 import { initializeDBClientAndStore, initializeRedisClientAndStore } from './SessionPersistance'
 
@@ -415,7 +416,7 @@ const _generateJwtToken = (user: Partial<LoggedInUser>, expiryInMinutes: number,
 }
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate('jwt', { session: true }, (err: any, user: LoggedInUser, info: object) => {
+    passport.authenticate('jwt', { session: true }, async (err: any, user: LoggedInUser, info: object) => {
         if (err) {
             return next(err)
         }
@@ -429,6 +430,15 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         }
 
         if (!user) {
+            try {
+                const loopbackUser = await resolveOssLoopbackUser(req)
+                if (loopbackUser) {
+                    req.user = applyDefaultWorkspace(loopbackUser)
+                    return next()
+                }
+            } catch (loopbackErr) {
+                return next(loopbackErr)
+            }
             return res.status(401).json({ message: ErrorMessage.INVALID_MISSING_TOKEN })
         }
 
